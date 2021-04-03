@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Commande LED</title>
+    </head>
+    <body>
+        <h1>Etat de la LED</h1>
+        <h2 id="etatLED"></h2>
+        <h1>Commande de la LED</h1>
+        <button onclick="appelServeur('/switchLedOn', traiteReponse)">Allumer la LED</button>
+        <button onclick="appelServeur('/switchLedOff', traiteReponse)">Eteindre la LED</button>
+
+        <script>
+            function appelServeur(url, cFonction) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        cFonction(this);
+                    }
+                };
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+            function traiteReponse(xhttp) {
+                document.getElementById("etatLED").innerHTML = "LED " + xhttp.responseText;
+            }
+        </script>
+    </body>
+</html>
